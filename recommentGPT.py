@@ -33,7 +33,7 @@ def reCommentGPT():
     print(response.choices[0].message.content)
 
 #file 랜덤
-a = random.randrange(1,100)
+a = random.randrange(1,5)
 print(a)
 # 파일 코드 검사
 def fileCodeCheck():
