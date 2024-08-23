@@ -2,9 +2,13 @@ import srcsearch
 import openai
 import glob
 import mykey
-
+import random
+import pandas as pd
 
 openai.api_key=mykey.open_api
+
+file_path = './output.txt'
+
 
 # # 파일 평가
 def reCommentGPT():
@@ -28,12 +32,15 @@ def reCommentGPT():
     # 모델의 응답을 출력합니다.
     print(response.choices[0].message.content)
 
+#file 랜덤
+a = random.randrange(1,100)
+print(a)
 # 파일 코드 검사
 def fileCodeCheck():
     files = (srcsearch.filePy())
 
     # 파일 한개 검사
-    file = open(files[2],'r',encoding='UTF8')
+    file = open(files[a],'r',encoding='UTF8')
     code = ""
     while True:
          line = file.readline()
@@ -48,13 +55,24 @@ def fileCodeCheck():
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": code + "\n how you give score is this code Max score is 10"},
-            {'role': "assistant", "content": "To give a score to this code, we can evaluate it based on several criteria such as readability, modularity, error handling, efficiency, and adherence to best practices. Here is a breakdown of the evaluation:"}
+            {'role': "assistant", "content": "To give a score to this code, we can evaluate it based on several criteria such as readability, modularity, error handling, efficiency, and adherence to best practices. Extract evaluation items in json format."},
+            {'role': "assistant", "content": 
+'''The output format example is like this : {
+    "Readability":"score",
+    "Modularity": "score",
+    "Error Handling": "score",
+    "Efficiency": "score",
+    "Best Practices": "score"
+}'''
+            }
         ],
         temperature=0
     )
     print(respones.choices[0].message.content)
-    
-fileCodeCheck()
+    with open(file_path, 'w') as file:
+        file.write(respones.choices[0].message.content)
+
+
     #Py 파일 전체 확인
     # for i in range(len(files)):
 
