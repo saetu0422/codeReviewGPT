@@ -48,7 +48,6 @@ def fileCodeCheck():
              break
          code += line
     file.close()
-    print(code)
     # Gpt 사용하여 내용 물어보기
     respones = openai.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -71,7 +70,6 @@ def fileCodeCheck():
     print(respones.choices[0].message.content)
     with open(file_path, 'w') as file:
         file.write(respones.choices[0].message.content)
-
 
     #Py 파일 전체 확인
     # for i in range(len(files)):
